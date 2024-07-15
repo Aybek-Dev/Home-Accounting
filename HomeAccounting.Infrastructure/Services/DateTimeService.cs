@@ -1,0 +1,9 @@
+﻿using HomeAccounting.Application.Interfaces;
+
+namespace HomeAccounting.Infrastructure.Services
+{
+	public class DateTimeService : IDateTime
+	{
+		public DateTime Now => DateTime.UtcNow;
+	}
+}
