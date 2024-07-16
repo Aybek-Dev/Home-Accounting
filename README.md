@@ -55,8 +55,8 @@
      "DefaultConnection": "Host=localhost;Database=home_accounting;Username=ваш-логин;Password=ваш-пароль"
    }
    "ConnectionStrings": {
-  "HomeAccountingDbContext": "Host=Y=your_host;Port=ypur_port;Database=your_database;UserId=your_user_id;Password=your_password;"
-  }
+   "HomeAccountingDbContext": "Host=Y=your_host;Port=ypur_port;Database=your_database;UserId=your_user_id;Password=your_password;"
+   }
    ```
 
 2. Примените миграции для создания базы данных:
