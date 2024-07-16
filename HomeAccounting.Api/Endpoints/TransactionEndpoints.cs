@@ -52,7 +52,7 @@ namespace HomeAccounting.Api.Endpoints
 			if (context.Request.Cookies.TryGetValue("tasty-cookies", out string token))
 			{
 				var transaction = await transactionService.GetTransactionById(token, id);
-				var response = new GetTransactionRequest(transaction.Id, transaction.CreatedDate, transaction.Type,transaction.Category.Name, transaction.Amount, transaction.Title);
+				var response = new GetTransactionRequest(transaction.Id, transaction.CreatedDate.Date, transaction.Type,transaction.Category.Name, transaction.Amount, transaction.Title);
 				return Results.Ok(response);
 			}
 			throw new Exception("Token not found");
@@ -66,7 +66,7 @@ namespace HomeAccounting.Api.Endpoints
 			{
 				var transaction = await transactionService.GetAllTransactions(token);
 				var response = transaction
-					.Select(t => new GetTransactionRequest(t.Id, t.CreatedDate,t.Type, t.Category.Name, t.Amount, t.Title));
+					.Select(t => new GetTransactionRequest(t.Id, t.CreatedDate.Date,t.Type, t.Category.Name, t.Amount, t.Title));
 				return Results.Ok(response);
 			}
 			throw new Exception("Token not found");
@@ -77,9 +77,10 @@ namespace HomeAccounting.Api.Endpoints
 			TransactionService transactionService,
 			HttpContext context)
 		{
-			if (context.Request.Cookies.TryGetValue("tasty-cookies", out string token))
+            await Console.Out.WriteLineAsync($"{request.CreateDate} {request.TransactionType} {request.Category.Id} {request.Amount} {request.Title}");
+            if (context.Request.Cookies.TryGetValue("tasty-cookies", out string token))
 			{
-				await transactionService.CreateTransaction(token, request.CreateDate, request.TransactionType, request.Category.Id, request.Amount, request.Title);
+				await transactionService.CreateTransaction(token,request.CreateDate, request.TransactionType, request.Category.Id, request.Amount, request.Title);
 				return Results.Ok();
 			}
 			throw new Exception("Token not found");

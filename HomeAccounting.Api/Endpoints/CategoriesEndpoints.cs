@@ -78,7 +78,7 @@ namespace HomeAccounting.Api.Endpoints
 			CategoryService categoryService,
 			HttpContext context)
 		{
-			if (context.Request.Cookies.TryGetValue("tasty-cookies", out string token))
+            if (context.Request.Cookies.TryGetValue("tasty-cookies", out string token))
 			{
 				await categoryService.CreateCategoryAsync(token, request.Name);
 				return Results.Ok();
