@@ -17,8 +17,16 @@ namespace HomeAccounting.Api
 			var configuration = builder.Configuration;
 			// Add services to the container.
 
-			services.AddControllers();
-
+			services.AddCors(options =>
+			{
+				options.AddDefaultPolicy(policy =>
+				{
+					policy.WithOrigins("http://localhost:3000")
+						  .AllowAnyHeader()
+						  .AllowAnyMethod()
+						  .AllowCredentials();
+				});
+			});
 			services.AddEndpointsApiExplorer();
 			services.AddSwaggerGen();
 			services.AddApiAuthentication(configuration);
@@ -44,14 +52,15 @@ namespace HomeAccounting.Api
 
 			app.UseCookiePolicy(new CookiePolicyOptions
 			{
-				MinimumSameSitePolicy = SameSiteMode.Strict,
+				MinimumSameSitePolicy = SameSiteMode.Lax, 
 				HttpOnly = HttpOnlyPolicy.Always,
 				Secure = CookieSecurePolicy.Always
 			});
 
+
 			app.UseAuthentication();
 			app.UseAuthorization();
-
+			app.UseCors();
 			app.AddMappedEndpoints();
 
 			app.Run();
