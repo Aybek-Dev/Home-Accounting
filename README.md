@@ -34,17 +34,9 @@
 
 ### Установка
 
-#### Frontend
-
-1. Клонируйте репозиторий на свой локальный компьютер:
+Клонируйте репозиторий на свой локальный компьютер:
    ```sh
    git clone https://github.com/Aybek-Dev/Home-Accounting.git
-   cd home-accounting/frontend
-   ```
-
-2. Установите зависимости:
-   ```sh
-   npm install
    ```
 
 #### Backend
@@ -76,7 +68,7 @@
 
 2. Откройте браузер и перейдите по адресу:
    ```
-   http://localhost:3000
+   http://localhost:YOUR
    ```
 
 #### Backend
@@ -88,7 +80,7 @@
 
 2. API сервер будет доступен по адресу:
    ```
-   http://localhost:7193
+   http://localhost:YOUR
    ```
 
 ## Структура проекта
