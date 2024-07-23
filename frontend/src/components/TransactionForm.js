@@ -15,10 +15,11 @@ const TransactionForm = ({ categories }) => {
     e.preventDefault();
 
     const selectedCategory = categories.find(category => category.id === categoryId);
+    const formattedDate = createDate ? new Date(createDate).toISOString() : new Date().toISOString();
 
     const transaction = {
       transactionType,
-      createDate,
+      createDate: formattedDate,
       category: selectedCategory,
       amount: parseFloat(amount),
       title,
