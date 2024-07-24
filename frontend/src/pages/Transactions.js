@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getTransactions, deleteTransaction } from '../api/transactions';
+import { getTransactions, createTransaction, deleteTransaction } from '../api/transactions';
 import { getCategories } from '../api/categories';
 import TransactionForm from '../components/TransactionForm';
 import TransactionsTable from '../components/TransactionsTable';
+import TransactionFilter from '../components/TransactionFilter';
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
@@ -31,6 +32,21 @@ const Transactions = () => {
     fetchCategories();
   }, []);
 
+  const handleCreateTransaction = async (transaction) => {
+    const success = await createTransaction(transaction);
+    if (success) {
+      const data = await getTransactions();
+      setTransactions(data);
+      alert('Transaction created successfully');
+    } else {
+      alert('Failed to create transaction');
+    }
+  };
+
+  const handleFilter = (filteredTransactions) => {
+    setTransactions(filteredTransactions);
+  };
+
   const handleDelete = async (id) => {
     try {
       const success = await deleteTransaction(id);
@@ -49,7 +65,8 @@ const Transactions = () => {
   return (
     <div>
       <h2>Transactions</h2>
-      <TransactionForm categories={categories} />
+      <TransactionForm categories={categories} onCreateTransaction={handleCreateTransaction} />
+      <TransactionFilter onFilter={handleFilter} />
       <TransactionsTable transactions={transactions} deleteTransaction={handleDelete} />
     </div>
   );
