@@ -11,5 +11,6 @@ namespace HomeAccounting.Domain.Interfaces.Repositories
 		Task<IList<Transaction>> GetAll(Guid userId);
 		Task<Transaction> GetById(Guid id, Guid userId);
 		Task Update(Guid userId,Guid id, TransactionType type, Guid categoryId, decimal amount, string? title,DateTimeOffset updateTime);
+		Task<IList<Transaction>> GetTransactionByFilter(Guid userId, DateTime? startDate, DateTime? endDate, Guid categoryId, TransactionType? transactionType);
 	}
 }

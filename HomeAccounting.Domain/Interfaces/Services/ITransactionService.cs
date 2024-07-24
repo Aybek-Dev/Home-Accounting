@@ -11,5 +11,6 @@ namespace HomeAccounting.Domain.Interfaces.Services
 		Task<Transaction> GetTransactionById(string token, Guid id);
 		Task<IList<Transaction>> GetAllTransactions(string token);
 		Task Update(string token, Guid id, TransactionType type, Guid categoryId, decimal amount, string? title);
+		Task<IList<Transaction>> GetTransactionByFiltres(string token, DateTime? startDate, DateTime? endDate, Guid categoryId, TransactionType? transactionType);
 	}
 }

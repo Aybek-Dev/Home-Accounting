@@ -63,6 +63,31 @@ namespace HomeAccounting.Infrastructure.Repositories
 			return _mapper.Map<Transaction>(transaction);
 		}
 
+		public async Task<IList<Transaction>> GetTransactionByFilter(Guid userId, DateTime? startDate, DateTime? endDate, Guid categoryId, TransactionType? transactionType)
+		{
+			var filterTransaction = _context.Transactions.Include(c => c.Category).AsNoTracking().Where(u => u.UserId == userId);
+
+			if (startDate != null)
+			{
+				if (endDate != null)
+					filterTransaction = filterTransaction.Where(d => d.CreatedDate >= startDate && d.CreatedDate <= endDate);
+				else
+					filterTransaction = filterTransaction.Where(d => d.CreatedDate >= startDate);
+			}
+			else if (endDate != null)
+			{
+				filterTransaction = filterTransaction.Where(d => d.CreatedDate <= endDate);
+			}
+			if (transactionType != null)
+			{
+				filterTransaction = filterTransaction.Where(t => t.Type == transactionType);
+			}
+			filterTransaction = filterTransaction.Where(c => c.CategoryId == categoryId);
+
+			var result = await filterTransaction.ToListAsync();
+			return _mapper.Map<IList<Transaction>>(result);
+		}
+
 		public async Task Update(Guid userId, Guid id, TransactionType type, Guid categoryId, decimal amount, string? title, DateTimeOffset updateTime)
 		{
 			await GetById(id, userId);
