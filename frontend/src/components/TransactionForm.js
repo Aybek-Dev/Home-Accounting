@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { createTransaction } from '../api/transactions';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const TransactionForm = ({ categories }) => {
+const TransactionForm = ({ categories, onCreateTransaction }) => {
   const [transactionType, setTransactionType] = useState(0);
   const [createDate, setCreateDate] = useState('');
   const [categoryId, setCategoryId] = useState('');
@@ -25,12 +24,7 @@ const TransactionForm = ({ categories }) => {
       title,
     };
 
-    const success = await createTransaction(transaction);
-    if (success) {
-      alert('Transaction created successfully');
-    } else {
-      alert('Failed to create transaction');
-    }
+    await onCreateTransaction(transaction);
   };
 
   return (
