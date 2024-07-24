@@ -12,9 +12,25 @@ namespace HomeAccounting.Api.Endpoints
 			endpoints.MapPost(string.Empty, CreateTransaction);
 			endpoints.MapGet(string.Empty, GetTransactions);
 			endpoints.MapGet("{id:guid}", GetTransactionById);
+			endpoints.MapPost("filter", GetTransactionsByFilter);
 			endpoints.MapPut("{id:guid}", UpdateTransaction);
 			endpoints.MapDelete("{id:guid}", DeleteTransaction);
 			return app;
+		}
+
+		private async static Task<IResult> GetTransactionsByFilter(
+			HttpContext context,
+		    [FromBody] GetFilterTransactionRequest request,
+			TransactionService transactionService)
+		{
+			if (context.Request.Cookies.TryGetValue("tasty-cookies", out string token))
+			{
+				var transaction = await transactionService.GetTransactionByFiltres(token, request.StartDate, request.EndDate, request.Category.Id, request.TransactionType); ;
+				var response = transaction
+					.Select(t => new GetTransactionRequest(t.Id, t.CreatedDate.Date, t.Type, t.Category.Name, t.Amount, t.Title));
+				return Results.Ok(response);
+			}
+			throw new Exception("Token not found");
 		}
 
 		private async static Task<IResult> DeleteTransaction(
@@ -77,7 +93,7 @@ namespace HomeAccounting.Api.Endpoints
 			TransactionService transactionService,
 			HttpContext context)
 		{
-            await Console.Out.WriteLineAsync($"{request.CreateDate} {request.TransactionType} {request.Category.Id} {request.Amount} {request.Title}");
+         //   await Console.Out.WriteLineAsync($"{request.CreateDate} {request.TransactionType} {request.Category.Id} {request.Amount} {request.Title}");
             if (context.Request.Cookies.TryGetValue("tasty-cookies", out string token))
 			{
 				await transactionService.CreateTransaction(token,request.CreateDate, request.TransactionType, request.Category.Id, request.Amount, request.Title);
