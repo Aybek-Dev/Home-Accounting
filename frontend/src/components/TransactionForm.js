@@ -25,6 +25,13 @@ const TransactionForm = ({ categories, onCreateTransaction }) => {
     };
 
     await onCreateTransaction(transaction);
+
+    // Сброс значений формы после отправки
+    setTransactionType(0);
+    setCreateDate('');
+    setCategoryId('');
+    setAmount('');
+    setTitle('');
   };
 
   return (

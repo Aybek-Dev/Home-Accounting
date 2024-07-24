@@ -8,8 +8,8 @@ const CategoryForm = ({ onCreateCategory }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    onCreateCategory(name); // Вызываем функцию создания категории из родительского компонента
-    setName(''); // Очистить поле ввода после отправки формы
+    onCreateCategory(name); 
+    setName(''); 
   };
 
   return (
