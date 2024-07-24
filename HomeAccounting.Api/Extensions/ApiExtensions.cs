@@ -1,7 +1,6 @@
 ﻿using HomeAccounting.Api.Endpoints;
 using HomeAccounting.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -37,7 +36,7 @@ namespace HomeAccounting.Api.Extensions
 						OnMessageReceived = context =>
 						{
 							context.Token = context.Request.Cookies["tasty-cookies"];
-							return	Task.CompletedTask;
+							return Task.CompletedTask;
 						}
 					};
 				});
