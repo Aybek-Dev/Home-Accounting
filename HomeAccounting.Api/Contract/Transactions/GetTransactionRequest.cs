@@ -8,5 +8,5 @@ namespace HomeAccounting.Api.Contract.Transactions
 		TransactionType Type,
 		string CategoryName,
 		decimal Amount,
-		string Title);
+		string? Title);
 }
